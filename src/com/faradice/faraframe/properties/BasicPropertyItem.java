@@ -42,7 +42,7 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 	private HashMap<String, Object> properties = new LinkedHashMap<>();
 	private HashMap<String, Class<?>> types = new HashMap<>();
 	private HashMap<String, ConstraintKey[]> constraintKeys = new HashMap<>();
-	private HashMap<String, String> attributes = new HashMap<>();
+	private HashMap<String, Object> attributes = new HashMap<>();
 	private int idIndex = 0;
 	
 	private boolean eventOn = true;
@@ -68,6 +68,10 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		idIndex = item.getIdIndex();
 	}
 
+	public BasicPropertyItem(String... fields) {
+		this(Arrays.asList(fields), 0);
+	}
+	
 	public BasicPropertyItem(String[] fields, int idIndex) {
 		this(Arrays.asList(fields), idIndex);
 	}
@@ -98,6 +102,15 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		return value;
 	}
 
+	public void setValues(Object... values) {
+		if (values.length != fields.size()) throw new RuntimeException("Number of values are not equal to number of fields");
+		int i = 0;
+		List<String> keys = getAllKeys();
+		for (Object value : values) {
+			set(fields.get(i++), value);
+		}
+	}
+	
 	public String getString(String key) {
 		String result = "";
 		Object value = get(key);
@@ -208,11 +221,11 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		return selection;
 	}
 
-	public void setAttribute(String key, String value) {
+	public void setAttribute(String key, Object value) {
 		attributes.put(key, value);
 	}
 	
-	public String getAttribute(String key) {
+	public Object getAttribute(String key) {
 		return attributes.get(key);
 	}
 	
@@ -280,6 +293,11 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		return new ArrayList<String>(properties.keySet());
 	}
 
+	public List<String> getAllFields() {
+		return new ArrayList<String>(properties.keySet());
+	}
+
+	
 	public ArrayList<String> getAsText() {
 		ArrayList<String> sa = new ArrayList<String>();
 		for (String key : properties.keySet()) {
