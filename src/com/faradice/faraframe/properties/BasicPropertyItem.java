@@ -32,14 +32,17 @@ import com.faradice.faraframe.util.ColorProvider;
  *
  */
 public class BasicPropertyItem implements IPropertyItem, Serializable {
+	private static final long serialVersionUID = 1L;
+
 	/***/
 	public final static Class<?>[] TYPES = {String.class, Number.class, Integer.class, Boolean.class, Color.class};
 	
 	private List<String> fields = new ArrayList<String>();
 	private List<String> editableFields = new ArrayList<String>();
-	private HashMap<String, Object> properties = new LinkedHashMap<String, Object>();
-	private HashMap<String, Class<?>> types = new HashMap<String, Class<?>>();
-	private HashMap<String, ConstraintKey[]> constraintKeys = new HashMap<String, ConstraintKey[]>();
+	private HashMap<String, Object> properties = new LinkedHashMap<>();
+	private HashMap<String, Class<?>> types = new HashMap<>();
+	private HashMap<String, ConstraintKey[]> constraintKeys = new HashMap<>();
+	private HashMap<String, String> attributes = new HashMap<>();
 	private int idIndex = 0;
 	
 	private boolean eventOn = true;
@@ -82,7 +85,7 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		this.fields = fields;
 	}
 
-	public void setColumns(String[] fields) {
+	public void setColumns(String... fields) {
 		this.fields = Arrays.asList(fields);
 	}
 
@@ -156,6 +159,42 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		return !isEmpty(key);
 	}
 
+	public String toString() {
+		return valuesString();
+	}
+	
+	public String valuesString() {
+		StringBuilder sb = new StringBuilder();
+		int i=0;
+		for (String key : properties.keySet()) {
+			Object value = properties.get(key);
+			if (value != null && typeSupported(value.getClass())) {
+				if (i>0) {
+					sb.append(", ");
+				}
+				sb.append(getString(key));
+				i++;
+			}
+		}
+		return sb.toString();
+	}
+
+	public String columnsString() {
+		StringBuilder sb = new StringBuilder();
+		int i=0;
+		for (String key : properties.keySet()) {
+			Object value = properties.get(key);
+			if (value != null && typeSupported(value.getClass())) {
+				if (i>0) {
+					sb.append(", ");
+				}
+				sb.append(key);
+				i++;
+			}
+		}
+		return sb.toString();
+	}
+
 	
 	public String[] getConstaints(String key) {
 		String[] selection = new String[0];
@@ -169,6 +208,14 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		return selection;
 	}
 
+	public void setAttribute(String key, String value) {
+		attributes.put(key, value);
+	}
+	
+	public String getAttribute(String key) {
+		return attributes.get(key);
+	}
+	
 	public void setEditable(String ... fields) {
 		this.editableFields = Arrays.asList(fields);
 	}
@@ -238,10 +285,10 @@ public class BasicPropertyItem implements IPropertyItem, Serializable {
 		for (String key : properties.keySet()) {
 			Object value = properties.get(key);
 			if (value != null && typeSupported(value.getClass())) {
-				sa.add(key + "\t" + getString(key));
+				sa.add(key + "=" + getString(key));
 			}
 		}
-		return sa;
+ 		return sa;
 	}
 
 	

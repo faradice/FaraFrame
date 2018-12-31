@@ -49,12 +49,6 @@ public class PropertyWriter<T extends IPropertyItem> {
 		return result;
 	}
 
-	private String getColumnType(String value) {
-		String result = "varchar(50)";
-
-		return result;
-	}
-
 	private String getDBType(Object type) {
 		String result = " varchar(100)";
 		if (type instanceof Date) {
@@ -80,6 +74,7 @@ public class PropertyWriter<T extends IPropertyItem> {
 			stmt.execute();
 		} catch (Exception ex) {
 			try {
+				stmt.close();
 				String[] columns = item.getItems();
 
 				// Create Table

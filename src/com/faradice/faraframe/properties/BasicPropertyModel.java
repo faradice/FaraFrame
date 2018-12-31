@@ -18,7 +18,7 @@ import com.faradice.faraframe.util.SQLEntry;
  * @param <T>  The type of the property item
  */
 public class BasicPropertyModel<T extends IPropertyItem> implements IPropertyModel<T>, Serializable {
-
+	private static final long serialVersionUID = 1L;
 	private String name = null;
 	private int idIndex = 0;
 	private List<String> columnNames = new ArrayList<String>();
