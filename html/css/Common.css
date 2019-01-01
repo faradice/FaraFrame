@@ -1,0 +1,33 @@
+body {
+  font-family: Arial;
+  margin: 00;
+}
+
+a {
+  color: #b8bcbc ;
+  font-family: helvetica;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+a:hover {
+  color: #8a8d8d;
+}
+.Header{
+  background-color: #475a85;
+  padding:0.5em;
+  color: white;
+  text-align:center;
+  border-bottom:1 solid black;
+  font-size: 40px;	
+}
+
+.Footer{
+  font-size: xsmall;
+  font-size: small;
+  position: fixed;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  width: 100%;
+  text-align: left;
+}
