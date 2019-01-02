@@ -13,12 +13,14 @@ public class FaraWeb {
 		hd+="</style>";
 		hd+= "</head>";
 		hd+= "<body>";
+		hd+="<div class='page-wrap'>";
 	    hd+= load("Top.html").replace("$(Name)", "Faradice");
 		return hd;
 	}
 
 	public static String end() {
-		String end = "<div class='Footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></div>";
+		String end = "</div>";
+		end += "<footer class='site-footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></footer>";
 		end += "</body></html>";
 		return end;
 	}
@@ -28,7 +30,7 @@ public class FaraWeb {
 		try {
 			String resource = "/"+fileName;
 			InputStream is = FaraWeb.class.getResourceAsStream(resource);
-			if (is == null) throw new Exception("Resorce not found: "+resource);
+			if (is == null) throw new Exception("Resource not found: "+resource);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			String res = null;
 			while ((res = br.readLine()) != null) {

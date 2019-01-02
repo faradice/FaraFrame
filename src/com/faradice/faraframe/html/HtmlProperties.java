@@ -19,7 +19,7 @@ public class HtmlProperties {
 	}
 	
 	public static String form(BasicPropertyItem bpi) {
-		String action = bpi.getAttribute("Action").toString();
+//		String action = bpi.getAttribute("Action").toString();
 		String submitTxt = bpi.getAttribute("Submit").toString();
 		int[] length = ((int[])bpi.getAttribute("Size"));
 //		String form = "<form action='"+action+"' method='post'>";
@@ -41,11 +41,11 @@ public class HtmlProperties {
 		return form;
 	}
 	
-	public static String form(String[] cols, Object[] values, String action, int[] fieldSize) {
+	public static String form(String[] cols, Object[] values, int[] fieldSize) {
 		BasicPropertyItem bi = new BasicPropertyItem(cols);
 		bi.setValues(values);
 		bi.setAttribute("Size", fieldSize);
-		bi.setAttribute("Action", action);
+//		bi.setAttribute("Action", action);
 		bi.setAttribute("Submit", "OK");
 		return form(bi);
 	}
@@ -70,7 +70,6 @@ public class HtmlProperties {
 			colNr++;
 		}
 		FaraFiles.appendToFile(fileName, row);
-		System.out.println(row);
 	}
 	
 	public static void main(String[] args) {

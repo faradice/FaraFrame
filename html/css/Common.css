@@ -1,6 +1,38 @@
-body {
+* {
   font-family: Arial;
-  margin: 00;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.Header {
+  background-color: #475a85;
+  padding:0.5em;
+  color: white;
+  text-align:left;
+  border-bottom:1 solid black;
+  font-size: 40px;	
+}
+
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -30px;  
+}
+
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.site-footer, .page-wrap:after {
+  height: 23px; 
+}
+
+.site-footer {
+  font-size: 12px;
+  padding: 7px 0px 0px 15px;	
 }
 
 a {
@@ -14,33 +46,29 @@ a:hover {
   color: #8a8d8d;
 }
 
-.Header{
-  background-color: #475a85;
-  padding:0.5em;
-  color: white;
-  text-align:left;
-  border-bottom:1 solid black;
-  font-size: 40px;	
-}
-
-.menu{
+.menu {
 	color: white;
    -webkit-transition:color 1s;
    transition:color 1s;  
 }
 
-.menu:hover{
+.menu:hover {
 	color: #b8bcbc;
    -webkit-transition:color 1s;
    transition:color 1s;  
 }
 
-.Footer{
-  font-size: xsmall;
-  font-size: small;
-  position: fixed;
-  left: 0.5rem;
-  bottom: 0.5rem;
-  width: 100%;
-  text-align: left;
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
 }
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px;
+}
+
