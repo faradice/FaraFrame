@@ -13,13 +13,26 @@ a {
 a:hover {
   color: #8a8d8d;
 }
+
 .Header{
   background-color: #475a85;
   padding:0.5em;
   color: white;
-  text-align:center;
+  text-align:left;
   border-bottom:1 solid black;
   font-size: 40px;	
+}
+
+.menu{
+	color: white;
+   -webkit-transition:color 1s;
+   transition:color 1s;  
+}
+
+.menu:hover{
+	color: #b8bcbc;
+   -webkit-transition:color 1s;
+   transition:color 1s;  
 }
 
 .Footer{

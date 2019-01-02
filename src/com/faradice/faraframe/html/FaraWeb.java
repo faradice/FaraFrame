@@ -5,15 +5,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class FaraWeb {
-	public static String begin(String title) {
+	public static String begin() {
 		String hd = "<html><head>";
-		hd+= load("Header.html");
-		hd = hd.replace("$(Title)", title);
+		hd+= load("Header.html").replace("$(Title)", "Faradice");
 		hd+="<style>";
 		hd+= load("css/Common.css");
 		hd+="</style>";
 		hd+= "</head>";
 		hd+= "<body>";
+	    hd+= load("Top.html").replace("$(Name)", "Faradice");
 		return hd;
 	}
 
@@ -42,7 +42,7 @@ public class FaraWeb {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(begin("Cool"));
+		System.out.println(begin());
 	}
 	
 }
