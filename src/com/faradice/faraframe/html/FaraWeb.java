@@ -3,23 +3,27 @@ package com.faradice.faraframe.html;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.List;
 
 import com.faradice.faraUtil.FaraFiles;
 import com.faradice.faraframe.properties.BasicPropertyItem;
 import com.faradice.faranet.FaraHtml;
 
+import sun.awt.image.URLImageSource;
+
 public class FaraWeb {
 	public static String begin() {
 		String hd = "<html><head>";
-		hd+= load("Header.html").replace("$(Title)", "Faradice");
+		hd+= loadFromCP("Header.html").replace("$(Title)", "Faradice");
 		hd+="<style>";
-		hd+= load("css/Common.css");
+		hd+= loadFromCP("css/Common.css");
+		hd+= "";
 		hd+="</style>";
 		hd+= "</head>";
 		hd+= "<body>";
 		hd+="<div class='page-wrap'>";
-	    hd+= load("Top.html").replace("$(Name)", "Faradice");
+	    hd+= loadFromCP("Top.html").replace("$(Name)", "Faradice");
 		return hd;
 	}
 
@@ -136,7 +140,7 @@ public class FaraWeb {
 		FaraFiles.appendToFile(fileName, row);
 	}
 
-	public static String load(String fileName) {
+	public static String loadFromCP(String fileName) {
 		StringBuilder sb = new StringBuilder();
 		try {
 			String resource = "/"+fileName;
@@ -153,7 +157,28 @@ public class FaraWeb {
 		} 
 		return sb.toString();
 	}
-	
+
+	public static String loadFromURL(String resource) {
+		StringBuilder sb = new StringBuilder();
+		if (!resource.startsWith("html//")) {
+			resource = resource + "html//";
+		}
+		BufferedReader br = null;
+		try  {
+			URI uri = new URI(resource);
+			br = new BufferedReader(new InputStreamReader(uri.toURL().openStream()));
+			String res = null;
+			while ((res = br.readLine()) != null) {
+				sb.append(res+"\n");
+			}
+			if (br != null) br.close();
+		} catch (Exception e) {
+			sb.append("\n"+e.getMessage());
+			e.printStackTrace();
+		}
+		return sb.toString();		
+	}
+
 	public static void main(String[] args) {
 		System.out.println(begin());
 	}
