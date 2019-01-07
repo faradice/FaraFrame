@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.faradice.faraUtil.FaraFiles;
@@ -11,18 +13,32 @@ import com.faradice.faraframe.properties.BasicPropertyItem;
 import com.faradice.faranet.FaraHtml;
 
 public class FaraWeb {
+
 	public static String begin() {
-		String hd = "<html>";
-		hd+="<head>";
+		List<String> css = Arrays.asList("Common.css");
+		return begin(css, null);
+	}
+	
+	public static String begin(List<String> css, List<String> scripts) {
+		if (css == null) css = new ArrayList<String>();
+		if (scripts == null) scripts = new ArrayList<String>();
+		String hd = "<html>\n";
+		hd+="<head>\n";
 		hd+= header("Register user");
-		hd+=fontAwesome();
-		hd+= css("Common.css");
-		hd+= "</head>";
-		hd+= "<body>";
+		hd+=fontAwesome()+"\n";
+		for (String cs : css) {
+		  hd+= css(cs);
+		}
+		for (String script : scripts) {
+			hd+= javaScript(script);
+		}
+		hd+= "</head>\n";
+		hd+= "<body>\n";
 		hd+="<div class='page-wrap'>";
 	    hd+= top("Faradice");
 		return hd;
 	}
+
 	
 	public static String header(String title) {
 		String h = "";
@@ -31,14 +47,6 @@ public class FaraWeb {
 		h+="<meta name='viewport' content='width=device-width, initial-scale=1'>";
 		return h;
 	}
-
-	/*
-	   <div class='Header' style=text-align:center>
-	      <span class='fas fa-charging-station' style=float:left></span>
-	      <span style=''>$(Name)</span>
-	      <span id='menu' class='fas fa-bars menu' style=float:right></span>
-	   </div>
-	   */
 	   
 	public static String top(String caption) {
 		String h = "";
@@ -50,20 +58,29 @@ public class FaraWeb {
 		return h;
 	}
 	
+	public static String lcr(String line) {
+		return line+"\n";
+	}
+	
 	public static String fontAwesome() {
 		String fa = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>";
-		return fa;
+		return lcr(fa);
 	}
 	
 	public static String css(String resource) {
 		String css = "<link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/"+resource+"' />";
-		return css;
+		return lcr(css);
+	}
+	
+	public static String javaScript(String scriptName) {
+		String script ="<script type='text/javascript' language='javascript' src='"+scriptName+"'></script>";
+		return lcr(script);
 	}
 	
 	public static String end() {
-		String end = "</div>";
-		end += "<footer class='site-footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></footer>";
-		end += "</body></html>";
+		String end = lcr("</div>");
+		end += lcr("<footer class='site-footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></footer>");
+		end += lcr("</body></html>");
 		return end;
 	}
 	
@@ -92,19 +109,19 @@ public class FaraWeb {
 				form+= FaraHtml.createField(key, length[i]+"", value);
 			}
 			i++;
-			form+="<br>";
+			form+=lcr("<br>");
 		}
-		form+=FaraHtml.createButton(submitTxt, submitTxt.toLowerCase());
-		form+="</form>";
+		form+=lcr(FaraHtml.createButton(submitTxt, submitTxt.toLowerCase()));
+		form+=lcr("</form>");
 		return form;
 	}
 	
 	public static String beginCard(int width) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<div class='card' style='width:"+width+";margin:10 auto;'>");
-		sb.append("<div class='container'>");
-		sb.append("<div style='margin:1em;font-size:120%'>Register User</div>");
-		sb.append("<div style='margin:1em'>");
+		sb.append(lcr("<div class='card' style='width:"+width+";margin:10 auto;'>"));
+		sb.append(lcr("<div class='container'>"));
+		sb.append(lcr("<div style='margin:1em;font-size:120%'>Register User</div>"));
+		sb.append(lcr("<div style='margin:1em'>"));
 		return sb.toString();
 	}
 	
@@ -127,7 +144,7 @@ public class FaraWeb {
 			if (col == null) {
 				col = "col "+colNr;
 			}
-			sb.append(FaraHtml.header(col));
+			sb.append(lcr(FaraHtml.header(col)));
 		}
 		
 		for (int rowId=rowPos; rowId < csvRows.size(); rowId++) {
