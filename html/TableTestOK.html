@@ -1,38 +1,33 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-
-	<title>Table test OK</title>
+	<link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no">
+	<title>Table test one</title>
 	<link rel="stylesheet" type="text/css" href="http://www.faradice.com/resource/css/jquery.dataTables.css">
 	<link rel="stylesheet" type="text/css" href="http://www.faradice.com/resource/css/shCore.css">
 	<link rel="stylesheet" type="text/css" href="http://www.faradice.com/resource/css/demo.css">
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
-    <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/Common.css'>
+	<style type="text/css" class="init"></style>
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" language="javascript" src="http://www.faradice.com/resource/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" language="javascript" src="http://www.faradice.com/resource/js/shCore.js"></script>
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/demo.js"></script>
 	<script type="text/javascript" language="javascript" class="init">
-		$(document).ready(function() {
-			$('#example').DataTable();
-		});
-	</script>
+	
+$(document).ready(function() {
+	$('#example').DataTable();
+} );
+</script>
 </head>
 <body>
-
-  <div class='page-wrap'>
-    <div class='Header' style='text-align:center'>
-    <span class='fas fa-charging-station' style='float:left'></span>
-    <span>Faradice
-      <span id='menu' class='fas fa-bars menu' style='float:right'>
-    </span>
-  </div>
-
-		   <table id="example" class="display">
+     <section>
+	   <h1>Test 1<span>Grunn tafla</span></h1>
+		<div class="info">
+		<div class="demo-html"></div> 
+		   <table id="example" class="display" style="width:100%">
 				<thead>
 					<tr>
-						<th>Nafn</th>
+						<th>Name</th>
 						<th>Position</th>
 						<th>Office</th>
 						<th>Age</th>
@@ -58,8 +53,17 @@
 						<td>$170,750</td>
 					</tr>
 				</tbody>
+				<tfoot>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Age</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</tfoot>
 			</table>
-			</div>
-			<footer class='site-footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></footer>
-  </body>
+		</section>	
+</body>
 </html>

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.faradice.faraUtil.FaraFiles;
@@ -14,75 +12,26 @@ import com.faradice.faranet.FaraHtml;
 
 public class FaraWeb {
 
-	public static String begin() {
-		List<String> css = Arrays.asList("Common.css");
-		return begin(css, null);
+	public static String beginSimpleHtml(String title) {
+		String res = loadFromCP("SimpleHeader.html");
+		res = res.replace("$(Title)", title);
+		return res;
 	}
 	
-	public static String begin(List<String> css, List<String> scripts) {
-		if (css == null) css = new ArrayList<String>();
-		if (scripts == null) scripts = new ArrayList<String>();
-		String hd = "<html>\n";
-		hd+="<head>\n";
-		hd+= header("Register user");
-		hd+=fontAwesome()+"\n";
-		for (String cs : css) {
-		  hd+= css(cs);
-		}
-		for (String script : scripts) {
-			hd+= javaScript(script);
-		}
-		hd+= "</head>\n";
-		hd+= "<body>\n";
-		hd+="<div class='page-wrap'>";
-	    hd+= top("Faradice");
-		return hd;
+	public static String beginTableHtml(String title) {
+		String res = loadFromCP("HtmlTableHeader.html");
+		res = res.replace("$(Title)", title);
+		return res;
 	}
 
 	
-	public static String header(String title) {
-		String h = "";
-		h+="<title>"+title+"</title>";
-		h+="<meta charset='utf-8'>";
-		h+="<meta name='viewport' content='width=device-width, initial-scale=1'>";
-		return h;
-	}
-	   
-	public static String top(String caption) {
-		String h = "";
-		h+="<div class='Header' style='text-align:center'>";
-		h+="<span class='fas fa-charging-station' style='float:left'></span>";
-        h+="<span style=''>"+caption+"</span>";
-		h+="<span id='menu' class='fas fa-bars menu' style='float:right'></span>";
-		h+="</div>";
-		return h;
-	}
-	
-	public static String lcr(String line) {
-		return line+"\n";
-	}
-	
-	public static String fontAwesome() {
-		String fa = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>";
-		return lcr(fa);
-	}
-	
-	public static String css(String resource) {
-		String css = "<link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/"+resource+"' />";
-		return lcr(css);
-	}
-	
-	public static String javaScript(String scriptName) {
-		String script ="<script type='text/javascript' language='javascript' src='"+scriptName+"'></script>";
-		return lcr(script);
-	}
-	
 	public static String end() {
-		String end = lcr("</div>");
-		end += lcr("<footer class='site-footer'><a href='http://www.faradice.com'>Visit Faradice Home</a></footer>");
-		end += lcr("</body></html>");
-		return end;
+		return  loadFromCP("Footer.html");
 	}
+	
+	public static String lcr(String s) {
+		return s+"\n";
+	}	
 	
 	public static String form(String[] cols, Object[] values, int[] fieldSize) {
 		BasicPropertyItem bi = new BasicPropertyItem(cols);
@@ -139,32 +88,37 @@ public class FaraWeb {
 			rowPos = 0;
 			cols = new String[cols.length];
 		}
+		sb.append(lcr("<thead>"));
+		sb.append(FaraHtml.startTableRow());
 		for (int colNr=0; colNr<cols.length; colNr++) {
 			String col = cols[colNr];
 			if (col == null) {
 				col = "col "+colNr;
 			}
-			sb.append(lcr(FaraHtml.header(col)));
+			sb.append(FaraHtml.tableHeader(col));
 		}
-		
+		sb.append(FaraHtml.endTableRow());
+		sb.append(lcr("</thead>"));
+		sb.append(lcr("<tbody>"));
 		for (int rowId=rowPos; rowId < csvRows.size(); rowId++) {
 			String row = csvRows.get(rowId).trim();
 			cols = row.split(",");
-			sb.append(FaraHtml.startRow());
+			sb.append(FaraHtml.startTableRow());
 			for (int colNr=0;colNr <cols.length; colNr++) {
 				sb.append(FaraHtml.cell(cols[colNr]));
 			}
-			sb.append(FaraHtml.endRow());
+			sb.append(FaraHtml.endTableRow());
 		}		
+		sb.append(lcr("</tbody>"));
 		sb.append(FaraHtml.endTable());
 		return sb.toString();
 	}
 	
 	public static String endCard() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("</div>");
-		sb.append("</div>");
-		sb.append("</div>");
+		sb.append(lcr("</div>"));
+		sb.append(lcr("</div>"));
+		sb.append(lcr("</div>"));
 		return sb.toString();
 	}
 	
@@ -199,7 +153,7 @@ public class FaraWeb {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			String res = null;
 			while ((res = br.readLine()) != null) {
-				sb.append(res+"\n");
+				sb.append(lcr(res));
 			}
 		} catch (Exception e) {
 			sb.append("\n"+e.getMessage());
@@ -219,7 +173,7 @@ public class FaraWeb {
 			br = new BufferedReader(new InputStreamReader(uri.toURL().openStream()));
 			String res = null;
 			while ((res = br.readLine()) != null) {
-				sb.append(res+"\n");
+				sb.append(lcr(res));
 			}
 			if (br != null) br.close();
 		} catch (Exception e) {
@@ -227,10 +181,6 @@ public class FaraWeb {
 			e.printStackTrace();
 		}
 		return sb.toString();		
-	}
-
-	public static void main(String[] args) {
-		System.out.println(begin());
 	}
 		
 }
