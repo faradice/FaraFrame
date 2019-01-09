@@ -39,6 +39,7 @@ public class TextFileLoader {
 				}
 				sql = sql +")";
 				System.out.println(sql);
+				stmt.close();
 				stmt =  sqlDb.getConnection().prepareStatement(sql);
 				stmt.execute();
 				System.out.println("Table "+tableName+" created");
@@ -87,6 +88,7 @@ public class TextFileLoader {
 			System.out.println(line);
 			e.printStackTrace();
 		} finally {
+			reader.close();
 			sqlDb.getConnection().commit();
 			SQLDB.close(stmt);
 		}

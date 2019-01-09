@@ -32,9 +32,6 @@ public class Configuration {
 	private void load() throws Exception {
 	    InputStream stream = new FileInputStream(fileName);
 		try {
-		    if (stream == null) {
-		    	throw new Exception ("Could not find the resource file: "+fileName);
-		    }
 		    properties = new Properties();
 	        properties.load(stream);
 		} finally {

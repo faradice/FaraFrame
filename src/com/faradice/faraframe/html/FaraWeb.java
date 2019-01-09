@@ -22,7 +22,7 @@ public class FaraWeb {
 		String res = loadFromCP("HtmlTableHeader.html");
 		res = res.replace("$(Title)", title);
 		return res;
-	}
+	} 
 
 	
 	public static String end() {
