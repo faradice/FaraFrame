@@ -15,7 +15,91 @@
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/demo.js"></script>
 	<script type="text/javascript" language="javascript" class="init">
 		$(document).ready(function() {
-			$('#example').DataTable();
+			table = $('#exportTable').DataTable( {
+				dom: 'Bfrtip',
+				"pageLength": 10,
+				buttons: [
+					'copy', 'csv', 'excel', 'pdf', 'print'
+				]
+			} );	
+
+			new $.fn.dataTable.Buttons(table, [
+				  {
+				    extend: "collection",
+				    text: "Actions",
+				    buttons: [
+				      {
+				        extend: "create",
+				        editor: editor
+				      },
+				      {
+				        extend: "edit",
+				        editor: editor
+				      },
+				      {
+				        extend: "remove",
+				        editor: editor
+				      },
+				      {
+				        extend: "selected",
+				        text: "Duplicate",
+				        action: function(e, dt, node, config) {
+				          // Start in edit mode, and then change to create
+				          editor
+				            .edit(
+				              table
+				                .rows({
+				                  selected: true
+				                })
+				                .indexes(),
+				              {
+				                title: "Duplicate record",
+				                buttons: "Create from existing"
+				              }
+				            )
+				            .mode("create");
+				        }
+				      }
+				    ]
+				  },
+				  {
+				    extend: "collection",
+				    text: "Export",
+				    buttons: [
+				      {
+				        extend: "copy",
+				        exportOptions: {
+				          columns: ":visible"
+				        }
+				      },
+				      {
+				        extend: "excelHtml5",
+				        exportOptions: {
+				          columns: ":visible"
+				        }
+				      },
+				      {
+				        extend: "csvHtml5",
+				        exportOptions: {
+				          columns: ":visible"
+				        }
+				      },
+				      {
+				        extend: "print",
+				        exportOptions: {
+				          columns: ":visible"
+				        }
+				      }
+				    ]
+				  },
+				  "colvis",
+				  "pageLength"
+				]);
+				 
+				table
+				  .buttons()
+				  .container()
+				  .appendTo($(".col-md-6:eq(0)", table.table().container()));
 		});
 	</script>
 </head>

@@ -1,0 +1,211 @@
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Editor WorkIT</title>
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
+    <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/editor.dataTables.css' />
+	
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
+
+	<style>	
+	.dt-button.red {
+        color: red;
+    }
+	
+	</style>	
+	
+	<script type="text/javascript" class="init">	
+ 	
+		$(document).ready(function() {
+			var maxId = 18;			
+			var columnDefs = [
+			{title: "DT_RowId"}, 
+			{title: "Name", type: "text"}, 
+			{title: "Position", type: "text"}, 
+			{title: "Office", type : "text"}, 
+			{title: "Extn.", type: "text"}, 
+			{title: "Start date", type: "datetime"}, 
+			{title: "Salary",type: "text"}
+			];
+						
+			var dataSet = [
+			[1,"Tiger Nixon", "System Arkchitect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
+			[2,"Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"],
+			[3,"Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000"],
+			[4,"Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060"],
+			[5,"Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700"],
+			[6,"Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000"],
+			[7,"Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500"],
+			[8,"Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900"],
+			[9,"Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500"],
+			[10,"Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600"],
+			[11,"Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560"],
+			[12,"Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000"],
+			[13,"Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600"],
+			[14,"Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500"],
+			[15,"Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750"],
+			[16,"Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500"],
+			[17,"Paul Byrd", "Chief Financial Officer (CFO)", "New York", "3059", "2010/06/09", "$725,000"],
+			[18,"Gloria Little", "Systems Administrator", "New York", "1721", "2009/04/10", "$237,500"]
+			];
+		
+			editForm = new $.fn.dataTable.Editor( {
+				table: "#faraTable",
+					title: 'Skrá Hleðslu', 
+					fields: [ 
+					{label: "Name:", name: "Name"}, 
+					{label: "Position:", name: "Position"}, 
+					{label: "Office:",name: "Office"}, 
+					{label: "Extension:", name: "Extension"}, 
+					{label: "Start date:", name: "StartDate", type: "datetime"}, 
+					{label: "Laun:",name: "Salary"}
+				]
+			});
+
+			deleteForm = new $.fn.dataTable.Editor( {
+				table: "#faraTable",
+					title: 'Eyða Hleðslu', 
+					fields: [ 
+					{label: "Hleðsla:", name: "Name", type: "readonly"}, 
+				]
+			});
+			
+			var addRow = {
+			  text: '',
+			  className: 'far fa-plus-square',
+			  action: function ( e, dt, node, config ){
+				editForm.create({
+					title: 'Skrá nýja hleðslu',	
+					buttons: [
+					{  text:'Staðfesta',
+					   action: function() {
+						  maxId++;
+						  var newRow = [maxId, editForm.get("Name"), editForm.get("Position"), editForm.get("Office"), editForm.get("Extension"), editForm.get("StartDate"), editForm.get("Salary")];
+						  table.row.add(newRow).draw();
+						  this.close();
+					   }     					  
+					}, 
+					{  text:'Hætta við',
+					   action: function(e,dt, node, config) {
+						  this.close();
+					   }     					  
+					}
+					]
+				});
+			  }
+			}
+
+			var editRow = {
+			  text: '',
+			  className: 'far fa-edit',
+			  action: function ( e, dt, node, config ){
+				editForm.create({
+					title: 'Breyta hleðslu',	
+					buttons: [
+					{  text:'Staðfesta',
+					   action: function() {
+						  this.close();
+						  var newRow = [maxId, editForm.get("Name"), editForm.get("Position"), editForm.get("Office"), editForm.get("Extension"), editForm.get("StartDate"), editForm.get("Salary")];
+//						  table.row.add(newRow).draw();
+					   }     					  
+					}, 
+					{  text:'Hætta við',
+					   action: function(e,dt, node, config) {
+						  this.close();
+					   }     					  
+					} 
+					]
+				});
+				editForm.set(('Name'), table.row('.selected').data()[1]);
+				editForm.set(('Position'), table.row('.selected').data()[2]);
+				editForm.set(('Office'), table.row('.selected').data()[3]);
+				editForm.set(('Extension'), table.row('.selected').data()[4]);
+				editForm.set(('StartDate'), table.row('.selected').data()[5]);
+				editForm.set(('Salary'), table.row('.selected').data()[6]);
+			  }
+			}
+			
+			var deleteRow = {
+				extend: 'selected',
+				text: '',
+				className: 'red far fa-trash-alt',
+				action: function ( e, dt, node, config ) {
+				var df = deleteForm.create({
+					title: 'Henda hleðslu',
+					buttons: [
+					{  text:'Staðfesta',
+					   action: function() {
+						  this.close();
+						  var row = table.row('.selected');
+						  row.remove().draw( false );
+					  }
+					}, 
+					{  text:'Hætta við',
+					   action: function(e,dt, node, config) {
+						  this.close();
+					   }     					  
+					} 
+					]
+				});
+				df.set(('Name'), table.row('.selected').data()[1]);
+			  }
+			}
+			
+			var table = $('#faraTable').DataTable({
+				data: dataSet,				
+				columns: columnDefs,
+				dom: "Bfrtip",				
+				select: 'single',
+				responsive: true,
+				
+				language: {
+				    info: "Síða _PAGE_ af _PAGES_",
+					paginate: {
+						previous: "Fyrri",
+						next: "Næsta",
+						last: "Síðasta",
+						first: "Fyrsta"
+				   }
+				},
+
+							
+				buttons: [
+					addRow,
+					editRow,
+					deleteRow,
+					{
+						extend: 'collection',
+						text: 'Senda',
+						buttons: [ 'csv', 'excel', 'pdf' ]
+					}
+    			]
+			});
+		});
+     </script>		
+</head>
+<body>
+  <div class="container">
+  	<table id="faraTable" class="display nowrap" style="width:100%">
+    </table>
+  </div>
+</body>
+</html>
+  
+
+
