@@ -74,6 +74,11 @@ public class FaraWeb {
 		return sb.toString();
 	}
 	
+	public static String tableControl() {
+		String tableControl = loadFromCP("TableControl.Html");
+		return tableControl;
+	}
+	
 	public static String table(List<String> csvRows) {
 		if (csvRows.size() < 1) {
 			return "";
