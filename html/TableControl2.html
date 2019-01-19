@@ -31,31 +31,41 @@
 	</style>	
 	
 	<script type="text/javascript" class="init">	
-		var table; 	
-	  	function add(newData) {
-	        $.ajax({
-	            method:"POST",
-	            dataType: "text",
-				url: "/Fara/api/chargers",
-	            data: "Skráðu þessi gögn",
-	            success: function(data) {
-					table.ajax.reload( null, false );
-	            },
-	            error: function() {
-					table.ajax.reload( null, false );
-	            }
-	        });
-	    }    
-	
+ 	
 		$(document).ready(function() {
-
+			var maxId = 18;			
+			var columnDefs = [
+			{title: "DT_RowId"}, 
+			{title: "group", type: "text"}, 
+			{title: "name", type: "text"}, 
+			{title: "description", type : "text"}, 
+			{title: "ip", type: "text"}, 
+			];
+				
+			function data(input, type) {
+				$.ajax({
+					type: type,
+					url: "/Fara/api/",
+				    data : input,
+			        success: function(data) {
+			        	dataset = data;
+			        	alert(data);
+			        	$(".result").html(data);
+			        }
+				});
+			}
+			
+			
 			editForm = new $.fn.dataTable.Editor( {
 				table: "#faraTable",
 					title: 'Skrá Hleðslu', 
 					fields: [ 
-					{label: "Nafn:", name: "Nafn"}, 
-					{label: "Heimili:", name: "Heimili"}, 
-					{label: "Starf:",name: "Starf"}, 
+					{label: "Name:", name: "Name"}, 
+					{label: "Position:", name: "Position"}, 
+					{label: "Office:",name: "Office"}, 
+					{label: "Extension:", name: "Extension"}, 
+					{label: "Start date:", name: "StartDate", type: "datetime"}, 
+					{label: "Laun:",name: "Salary"}
 				]
 			});
 
@@ -63,7 +73,7 @@
 				table: "#faraTable",
 					title: 'Eyða Hleðslu', 
 					fields: [ 
-					{label: "Hleðsla:", name: "Nafn", type: "readonly"}, 
+					{label: "Hleðsla:", name: "Name", type: "readonly"}, 
 				]
 			});
 			
@@ -76,9 +86,9 @@
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
-						  var newRow = [editForm.get("Nafn"), editForm.get("Heimili"), editForm.get("Starf")];
-						  alert(newRow);
-						  add(newRow);
+						  maxId++;
+						  var newRow = [maxId, editForm.get("Name"), editForm.get("Position"), editForm.get("Office"), editForm.get("Extension"), editForm.get("StartDate"), editForm.get("Salary")];
+						  table.row.add(newRow).draw();
 						  this.close();
 					   }     					  
 					}, 
@@ -103,7 +113,7 @@
 					{  text:'Staðfesta',
 					   action: function() {
 						  this.close();
-						  var newRow = [maxId, editForm.get("Nafn"), editForm.get("Heimili"), editForm.get("Starf")];
+						  var newRow = [maxId, editForm.get("Name"), editForm.get("Position"), editForm.get("Office"), editForm.get("Extension"), editForm.get("StartDate"), editForm.get("Salary")];
 //						  table.row.add(newRow).draw();
 					   }     					  
 					}, 
@@ -114,9 +124,12 @@
 					} 
 					]
 				});
-				editForm.set(('Nafn'), table.row('.selected').data()[1]);
-				editForm.set(('Heimili'), table.row('.selected').data()[2]);
-				editForm.set(('Starf'), table.row('.selected').data()[3]);
+				editForm.set(('Name'), table.row('.selected').data()[1]);
+				editForm.set(('Position'), table.row('.selected').data()[2]);
+				editForm.set(('Office'), table.row('.selected').data()[3]);
+				editForm.set(('Extension'), table.row('.selected').data()[4]);
+				editForm.set(('StartDate'), table.row('.selected').data()[5]);
+				editForm.set(('Salary'), table.row('.selected').data()[6]);
 			  }
 			}
 			
@@ -146,7 +159,7 @@
 			  }
 			}
 			
-			table = $('#faraTable').DataTable({
+			var table = $('#faraTable').DataTable({
 				"ajax": {
 					"url":"/Fara/api/chargers",
 					"type":"GET",
@@ -187,12 +200,12 @@
 </head>
 <body>
    <div class="container">
-  	<table id="faraTable" class="display nowrap" style="width:100%">
+  	<table id="ajaxTable" class="display nowrap" style="width:100%">
   	   <thead>
         <tr>
-          <th>Nafn</th>
           <th>Heimili</th>
-          <th>Starf</th>
+          <th>Nafn</th>
+          <th>Vinna</th>
         </tr>
        </thead>
     </table>
