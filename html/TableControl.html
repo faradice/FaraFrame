@@ -2,7 +2,7 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-	<title>Editor WorkIT</title>
+	<title>TableControl</title>
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
@@ -37,7 +37,7 @@
 	            method:"POST",
 	            dataType: "text",
 				url: "/Fara/api/chargers",
-	            data: "Skráðu þessi gögn",
+	            data: newData,
 	            success: function(data) {
 					table.ajax.reload( null, false );
 	            },
@@ -53,17 +53,17 @@
 				table: "#faraTable",
 					title: 'Skrá Hleðslu', 
 					fields: [ 
-					{label: "Nafn:", name: "Nafn"}, 
-					{label: "Heimili:", name: "Heimili"}, 
-					{label: "Starf:",name: "Starf"}, 
+					{label: "Nafn:", name: "name"}, 
+					{label: "Heimili:", name: "home"}, 
+					{label: "Starf:",name: "occupation"}, 
 				]
 			});
 
-			deleteForm = new $.fn.dataTable.Editor( {
+			deleteForm = new $.fn.dataTable.Editor({
 				table: "#faraTable",
 					title: 'Eyða Hleðslu', 
 					fields: [ 
-					{label: "Hleðsla:", name: "Nafn", type: "readonly"}, 
+					{label: "Hleðsla:", name: "name", type: "readonly"}, 
 				]
 			});
 			
@@ -76,10 +76,11 @@
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
-						  var newRow = [editForm.get("Nafn"), editForm.get("Heimili"), editForm.get("Starf")];
-						  alert(newRow);
-						  add(newRow);
-						  this.close();
+						  if (editForm.get("name") != "") {
+					    	  var newRow = editForm.get("name")+", "+ editForm.get("home")+", "+editForm.get("occupation");
+						      add(newRow);
+						      this.close();
+						  }
 					   }     					  
 					}, 
 					{  text:'Hætta við',
@@ -97,14 +98,14 @@
 			  className: 'far fa-edit',
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ){
-				editForm.create({
+				  editForm.create({
 					title: 'Breyta hleðslu',	
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
 						  this.close();
-						  var newRow = [maxId, editForm.get("Nafn"), editForm.get("Heimili"), editForm.get("Starf")];
-//						  table.row.add(newRow).draw();
+						  var newRow = [maxId, editForm.get("name"), editForm.get("home"), editForm.get("occupation")];
+//					  table.row.add(newRow).draw();
 					   }     					  
 					}, 
 					{  text:'Hætta við',
@@ -114,9 +115,9 @@
 					} 
 					]
 				});
-				editForm.set(('Nafn'), table.row('.selected').data()[1]);
-				editForm.set(('Heimili'), table.row('.selected').data()[2]);
-				editForm.set(('Starf'), table.row('.selected').data()[3]);
+				editForm.set(('name'), table.row('.selected').data().name);
+				editForm.set(('home'), table.row('.selected').data().home);
+				editForm.set(('occupation'), table.row('.selected').data().occupation);
 			  }
 			}
 			
@@ -142,7 +143,7 @@
 					} 
 					]
 				});
-				df.set(('Name'), table.row('.selected').data()[1]);
+				df.set(('name'), table.row('.selected').data().name);
 			  }
 			}
 			
@@ -153,9 +154,9 @@
 					"dataSrc": ""
 				},
 		        "columns": [
-		            { "data": "Heimili" },
-		            { "data": "Nafn"},
-		            { "data": "Starf"}
+		            { "data": "name" },
+		            { "data": "home"},
+		            { "data": "occupation"}
 				],
 				dom: "Bfrtip",				
 				select: 'single',
