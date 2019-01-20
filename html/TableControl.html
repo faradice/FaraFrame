@@ -2,7 +2,7 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-	<title>TableControl</title>
+	<title>$(TableTitle)</title>
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
@@ -32,12 +32,12 @@
 	
 	<script type="text/javascript" class="init">	
 		var table; 	
-	  	function add(newData) {
+	  	function updateData(command) {
 	        $.ajax({
 	            method:"POST",
 	            dataType: "text",
 				url: "/Fara/api/chargers",
-	            data: newData,
+	            data: command,
 	            success: function(data) {
 					table.ajax.reload( null, false );
 	            },
@@ -51,7 +51,6 @@
 
 			editForm = new $.fn.dataTable.Editor( {
 				table: "#faraTable",
-					title: 'Skrá Hleðslu', 
 					fields: [ 
 					{label: "Nafn:", name: "name"}, 
 					{label: "Heimili:", name: "home"}, 
@@ -61,9 +60,8 @@
 
 			deleteForm = new $.fn.dataTable.Editor({
 				table: "#faraTable",
-					title: 'Eyða Hleðslu', 
 					fields: [ 
-					{label: "Hleðsla:", name: "name", type: "readonly"}, 
+					{label: "Name:", name: "name", type: "readonly"}, 
 				]
 			});
 			
@@ -72,15 +70,16 @@
 			  className: 'far fa-plus-square',
 			  action: function ( e, dt, node, config ){
 				editForm.create({
-					title: 'Skrá nýja hleðslu',	
+					title: '$(AddRecord)',	
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
-						  if (editForm.get("name") != "") {
-					    	  var newRow = editForm.get("name")+", "+ editForm.get("home")+", "+editForm.get("occupation");
-						      add(newRow);
-						      this.close();
-						  }
+					      this.close();
+				    	  var name = editForm.get("name")
+				    	  var home = editForm.get("home")
+				    	  var occupation =editForm.get("occupation");
+					      var command = "TestFile;Add;"+name+", "+home+", "+occupation;
+					      updateData(command);
 					   }     					  
 					}, 
 					{  text:'Hætta við',
@@ -99,13 +98,20 @@
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ){
 				  editForm.create({
-					title: 'Breyta hleðslu',	
+					title: '$(UpdateRecord)',	
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
-						  this.close();
-						  var newRow = [maxId, editForm.get("name"), editForm.get("home"), editForm.get("occupation")];
-//					  table.row.add(newRow).draw();
+					      this.close();
+				    	  var name = table.row('.selected').data().name;
+				    	  var home = table.row('.selected').data().home;
+				    	  var occupation = table.row('.selected').data().occupation;
+				    	  var newName = editForm.get("name");
+				    	  var newHome =editForm.get("home")
+				    	  var newOccupation = editForm.get("occupation")
+					      var command = "TestFile;Update;"+name+", "+home+", "+occupation;
+					      command+=";"+newName+", "+newHome+", "+newOccupation;
+					      updateData(command);
 					   }     					  
 					}, 
 					{  text:'Hætta við',
@@ -127,14 +133,17 @@
 				className: 'red far fa-trash-alt',
 				action: function ( e, dt, node, config ) {
 				var df = deleteForm.create({
-					title: 'Henda hleðslu',
+					title: '$(DelRecord)',
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
-						  this.close();
-						  var row = table.row('.selected');
-						  row.remove().draw( false );
-					  }
+					      this.close();
+				    	  var name = table.row('.selected').data().name;
+				    	  var home = table.row('.selected').data().home;
+				    	  var occupation = table.row('.selected').data().occupation
+					      var command = "TestFile;Delete;"+name+", "+home+", "+occupation;
+					      updateData(command);
+					   }
 					}, 
 					{  text:'Hætta við',
 					   action: function(e,dt, node, config) {
