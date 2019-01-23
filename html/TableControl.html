@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
     <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/editor.dataTables.css' />
+    <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/Common.css'>
 	
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -22,13 +23,18 @@
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
-
-	<style>	
-	.dt-button.red {
-        color: red;
-    }
 	
-	</style>	
+	<style>
+   		.dt-button.gray {
+   			color: gray;
+   		}
+
+  		.dt-button.sep {
+   			margin-right: 2em;
+   		}
+
+	</style>
+	
 	
 	<script type="text/javascript" class="init">	
 		var table; 	
@@ -52,9 +58,7 @@
 			editForm = new $.fn.dataTable.Editor( {
 				table: "#faraTable",
 					fields: [ 
-					{label: "Nafn:", name: "name"}, 
-					{label: "Heimili:", name: "home"}, 
-					{label: "Starf:",name: "occupation"}, 
+					  $(EditFormLabels)	
 				]
 			});
 
@@ -70,15 +74,12 @@
 			  className: 'far fa-plus-square',
 			  action: function ( e, dt, node, config ){
 				editForm.create({
-					title: '$(AddRecord)',	
+					title: 'Nýskrá',	
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
 					      this.close();
-				    	  var name = editForm.get("name")
-				    	  var home = editForm.get("home")
-				    	  var occupation =editForm.get("occupation");
-					      var command = "TestFile;Add;"+name+", "+home+", "+occupation;
+					      $(AddCols)
 					      updateData(command);
 					   }     					  
 					}, 
@@ -98,19 +99,12 @@
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ){
 				  editForm.create({
-					title: '$(UpdateRecord)',	
+					title: 'Breyta',	
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
 					      this.close();
-				    	  var name = table.row('.selected').data().name;
-				    	  var home = table.row('.selected').data().home;
-				    	  var occupation = table.row('.selected').data().occupation;
-				    	  var newName = editForm.get("name");
-				    	  var newHome =editForm.get("home")
-				    	  var newOccupation = editForm.get("occupation")
-					      var command = "TestFile;Update;"+name+", "+home+", "+occupation;
-					      command+=";"+newName+", "+newHome+", "+newOccupation;
+					      $(UpdateCols)
 					      updateData(command);
 					   }     					  
 					}, 
@@ -121,19 +115,17 @@
 					} 
 					]
 				});
-				editForm.set(('name'), table.row('.selected').data().name);
-				editForm.set(('home'), table.row('.selected').data().home);
-				editForm.set(('occupation'), table.row('.selected').data().occupation);
+				$(SetFormData)
 			  }
 			}
 			
 			var deleteRow = {
 				extend: 'selected',
 				text: '',
-				className: 'red far fa-trash-alt',
+				className: 'sep far fa-trash-alt',
 				action: function ( e, dt, node, config ) {
 				var df = deleteForm.create({
-					title: '$(DelRecord)',
+					title: 'Henda',
 					buttons: [
 					{  text:'Staðfesta',
 					   action: function() {
@@ -156,6 +148,26 @@
 			  }
 			}
 			
+			var pdf2 = {
+				extend:    'pdfHtml5',
+				text:      '&nbsp;pdf',
+				className: 'far fa-file-pdf',
+				titleAttr: 'PDF'
+			}
+
+			var excel2 = {
+				extend:    'excelHtml5',
+				text:      '&nbsp;excel',
+				className: 'far fa-file-excel',
+				titleAttr: 'Excel'
+			}
+			var csv2 = {
+					extend:    'csvHtml5',
+					text:      '&nbsp;csv',
+					className: 'gray fas fa-file-csv',
+					titleAttr: 'csv',
+				}
+			
 			table = $('#faraTable').DataTable({
 				"ajax": {
 					"url":"/Fara/api/chargers",
@@ -163,9 +175,7 @@
 					"dataSrc": ""
 				},
 		        "columns": [
-		            { "data": "name" },
-		            { "data": "home"},
-		            { "data": "occupation"}
+		        	$(TableCols)
 				],
 				dom: "Bfrtip",				
 				select: 'single',
@@ -178,36 +188,48 @@
 						next: "Næsta",
 						last: "Síðasta",
 						first: "Fyrsta"
-				   }
+				   },
+			        select: {
+			            rows: ""
+			        },
+			        "search": "Finna:"
+
 				},
-							
+
+				dom: "Bfrtip",				
 				buttons: [
 					addRow,
 					editRow,
 					deleteRow,
-					{
-						extend: 'collection',
-						text: 'Senda',
-						buttons: [ 'csv', 'excel', 'pdf' ]
-					}
-    			]
+					csv2, excel2, pdf2
+				]
 			});
 		});
      </script>		
 </head>
 <body>
-   <div class="container">
-  	<table id="faraTable" class="display nowrap" style="width:100%">
-  	   <thead>
-        <tr>
-          <th>Nafn</th>
-          <th>Heimili</th>
-          <th>Starf</th>
-        </tr>
+  <div class='page-wrap'>
+    <div class='Header' style='text-align:center'>
+      <div style='margin-bottom: 0em;'>
+        <span class='fas fa-charging-station' style='float:left'></span>
+           <span>Faradice
+              <span id='menu' class='fas fa-bars menu' style='float:right'></span>
+           </span>
+      </div>
+    </div>  
+    <div style='margin: 1em'>
+      <div style= 'margin-bottom:1em'>$(TableTitle)</div>
+      <table id="faraTable" class="display nowrap" style="width:100%">
+  	     <thead>
+          <tr>
+			$(TableHead)
+          </tr>
        </thead>
-    </table>
+      </table>
+    </div>
   </div>
-</body>
+  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
+  </body>
 </html>
   
 
