@@ -174,9 +174,14 @@
 					"type":"GET",
 					"dataSrc": ""
 				},
-		        "columns": [
-		        	$(TableCols)
-				],
+		     "columns": [
+   			 { "data": "Stöð", "name":"Stöð", "title": "Stöð"},
+    		 { "data": "Lýsing", "name":"Lýsing", "title": "Lýsing"},
+    		 { "data": "IP tala", "name":"IPtala", "title": "IP tala"},
+             { "data": "GSM", "name":"GSM", "title": "GSM" },
+             { "data": "Númer kapals", "Númerkapals":"Lýsing", "title": "Númer kapals" },
+             { "data": "Tegund kapals", "name":"Tegundkapals", "title": "Tegund kapals" }
+             ],
 				dom: "Bfrtip",				
 				select: 'single',
 				responsive: true,
@@ -220,11 +225,6 @@
     <div style='margin: 1em'>
       <div style= 'margin-bottom:1em'>$(TableTitle)</div>
       <table id="faraTable" class="display nowrap" style="width:100%">
-  	     <thead>
-          <tr>
-			$(TableHead)
-          </tr>
-       </thead>
       </table>
     </div>
   </div>
