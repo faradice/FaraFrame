@@ -65,7 +65,7 @@
 			deleteForm = new $.fn.dataTable.Editor({
 				table: "#faraTable",
 					fields: [ 
-					{label: "Name:", name: "name", type: "readonly"}, 
+					$(DeleteFormLabels)	
 				]
 			});
 			
@@ -92,6 +92,32 @@
 				});
 			  }
 			}
+
+			var createAlikeRow = {
+					  text: '',
+					  className: 'far fa-copy',
+					  extend: 'selected',
+					  action: function ( e, dt, node, config ){
+						  editForm.create({
+							title: 'Afrita',	
+							buttons: [
+							{  text:'Staðfesta',
+							   action: function() {
+							      this.close();
+							      $(CreateAlikeCols)
+							      updateData(command);
+							   }     					  
+							}, 
+							{  text:'Hætta við',
+							   action: function(e,dt, node, config) {
+								  this.close();
+							   }     					  
+							} 
+							]
+						});
+						$(SetFormData)
+					  }
+					}
 
 			var editRow = {
 			  text: '',
@@ -130,10 +156,7 @@
 					{  text:'Staðfesta',
 					   action: function() {
 					      this.close();
-				    	  var name = table.row('.selected').data().name;
-				    	  var home = table.row('.selected').data().home;
-				    	  var occupation = table.row('.selected').data().occupation
-					      var command = "TestFile;Delete;"+name+", "+home+", "+occupation;
+					      $(DeleteCols)
 					      updateData(command);
 					   }
 					}, 
@@ -144,7 +167,7 @@
 					} 
 					]
 				});
-				df.set(('name'), table.row('.selected').data().name);
+				$(SetDelFormData)
 			  }
 			}
 			
@@ -200,6 +223,7 @@
 				buttons: [
 					addRow,
 					editRow,
+					createAlikeRow,
 					deleteRow,
 					csv2, excel2, pdf2
 				]
