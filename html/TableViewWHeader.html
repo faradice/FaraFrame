@@ -23,7 +23,6 @@
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	
 	<style>
    		.dt-button.gray {
@@ -102,9 +101,15 @@
      </script>		
 </head>
 <body>
-  $(Header)
   <div class='page-wrap'>
-    <p>
+    <div class='Header' style='text-align:center'>
+      <div style='margin-bottom: 0em;'>
+        <span class='fas fa-charging-station' style='float:left'></span>
+           <span>Faradice
+              <span id='menu' class='fas fa-bars menu' style='float:right'></span>
+           </span>
+      </div>
+    </div>  
     <div style='margin: 1em'>
       <div style= 'margin-bottom:1em'>$(TableTitle)</div>
       <table id="faraTable" class="display nowrap" style="width:100%">
