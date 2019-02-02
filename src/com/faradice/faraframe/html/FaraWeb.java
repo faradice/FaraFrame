@@ -12,10 +12,10 @@ import com.faradice.faranet.FaraHtml;
 
 public class FaraWeb {
 
-	public static String pageFrame(String title, String styles, String jspTop, String jspReady, String header, String content) {
+	public String pageFrame(String title, String styles, String jspTop, String jspReady, String header, String content) {
 		String page = loadFromCP("PageFramework.html");
-		page = page.replace("$(Title", title);
-		page = page.replace("$(Styles", styles);
+		page = page.replace("$(Title)", title);
+		page = page.replace("$(Styles)", styles);
 		page = page.replace("$(JspTop)", jspTop);
 		page = page.replace("$(JspReady)", jspReady);
 		page = page.replace("$(Header)", header);
@@ -23,15 +23,14 @@ public class FaraWeb {
 		return page;
 	}
 
-	public static String pageFrame(String title, String content) {
-		String page = loadFromCP("PageFramework.html");
-		page = page.replace("$(Title)", title);
-		page = page.replace("$(Styles", "");
-		page = page.replace("$(JspTop)", "");
-		page = page.replace("$(JspReady)", "");
-		page = page.replace("$(Header)", loadFromCP("FaraHeader.html"));
-		page = page.replace("$(Content)", content);
-		return page;
+	public String pageFrame(String title, String content) {
+		String header =  loadFromCP("FaraHeader.html");
+		return pageFrame(title, "", "", "", header, content);
+	}
+
+	public String pageFrame(String title, String styles, String content) {
+		String header =  loadFromCP("FaraHeader.html");
+		return pageFrame(title, styles, "", "", header, content);
 	}
 
 	
