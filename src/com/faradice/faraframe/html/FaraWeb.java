@@ -11,9 +11,17 @@ import com.faradice.faraframe.properties.BasicPropertyItem;
 import com.faradice.faranet.FaraHtml;
 
 public class FaraWeb {
+	final String htmlPath;
 
+	public FaraWeb() {
+		this("");
+	}
+	public FaraWeb(String htmlpath) {
+		this.htmlPath = htmlpath;
+	}
+	
 	public String pageFrame(String title, String styles, String jspTop, String jspReady, String header, String content) {
-		String page = loadFromCP("PageFramework.html");
+		String page = loadFromCP(htmlPath+"PageFramework.html");
 		page = page.replace("$(Title)", title);
 		page = page.replace("$(Styles)", styles);
 		page = page.replace("$(JspTop)", jspTop);
@@ -23,32 +31,19 @@ public class FaraWeb {
 		return page;
 	}
 
+	
 	public String pageFrame(String title, String content) {
-		String header =  loadFromCP("FaraHeader.html");
+		String header =  loadFromCP(htmlPath+"Header.html");
 		return pageFrame(title, "", "", "", header, content);
 	}
 
 	public String pageFrame(String title, String styles, String content) {
-		String header =  loadFromCP("FaraHeader.html");
+		String header =  loadFromCP(htmlPath+"Header.html");
 		return pageFrame(title, styles, "", "", header, content);
 	}
-
 	
-	public static String beginSimpleHtml(String title) {
-		String res = loadFromCP("SimpleHeader.html");
-		res = res.replace("$(Title)", title);
-		return res;
-	}
-	
-	public static String beginTableHtml(String title) {
-		String res = loadFromCP("HtmlTableHeader.html");
-		res = res.replace("$(Title)", title);
-		return res;
-	} 
-
-	
-	public static String end() {
-		return  loadFromCP("Footer.html");
+	public String end() {
+		return  loadFromCP(htmlPath+"Footer.html");
 	}
 	
 	public static String lcr(String s) {
@@ -96,8 +91,8 @@ public class FaraWeb {
 		return sb.toString();
 	}
 	
-	public static String tableControl() {
-		String tableControl = loadFromCP("TableControl.Html");
+	public static String tableControl(String prefix) {
+		String tableControl = loadFromCP(prefix+"TableControl.Html");
 		return tableControl;
 	}
 	
