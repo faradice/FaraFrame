@@ -43,7 +43,7 @@
 	        $.ajax({
 	            method:"POST",
 	            dataType: "text",
-				url: "/Farsyn/api/$(pageName)",
+				url: "/Farsyn/api$(pageName)",
 	            data: command,
 	            success: function(data) {
 					table.ajax.reload( null, false );
@@ -198,7 +198,7 @@
 			
 			table = $('#faraTable').DataTable({
 				"ajax": {
-					"url":"/Farsyn/api/$(pageName)",
+					"url":"/Farsyn/api$(pageName)",
 					"type":"GET",
 					"dataSrc": ""
 				},
@@ -246,7 +246,7 @@
       </table>
     </div>
   </div>
-  <footer class='site-footer'><a href='http://www.syn.is'>Heimasíða Faradice</a></footer>
+  <footer class='site-footer'><a href='http://www.syn.is'>Heimasíða Farsýn</a></footer>
   </body>
 </html>
   

@@ -26,8 +26,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	
 	<style>
-   		.dt-button.gray {
-   			color: gray;
+   		.dt-button.yellow-fg {
+   			color: #EAC440;
+   		}
+
+   		.dt-button.dark-bg {
+   			color: #EAC440;
    		}
 
   		.dt-button.sep {
@@ -42,7 +46,7 @@
 	        $.ajax({
 	            method:"POST",
 	            dataType: "text",
-				url: "/Farsyn/api/$(pageName)",
+				url: "/Farsyn/api$(pageName)",
 	            data: command,
 	            success: function(data) {
 					table.ajax.reload( null, false );
@@ -56,18 +60,17 @@
 		$(document).ready(function() {
 			var turnOn = {
 			  text: '',
-			  className: 'far fa-lightbulb',
+			  className: 'far fa-lightbulb yellow-fg',
 			  titleAttr: 'Kveikja',
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ) {
 				$(turnOn)   
 			    updateData(command);
-
 			  }
 			}
 			var dimmer = {
 			  text: '',
-			  className: 'far fa-minus-square',
+			  className: 'far fa-minus-square dark-fg',
 			  titleAttr: 'Dimma',
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ) {
@@ -77,7 +80,7 @@
 			}
 			var brighter = {
 			  text: '',
-			  className: 'far fa-plus-square',
+			  className: 'far fa-plus-square yellow-fg',
 			  titleAttr: 'Bjartar',
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ) {
@@ -87,7 +90,7 @@
 			}
 			var turnOff = {
 			  text: '',
-			  className: 'far fa-lightbulb',
+			  className: 'far fa-lightbulb dark-fg',
 			  titleAttr: 'Slökkva',
 			  extend: 'selected',
 			  action: function ( e, dt, node, config ) {
@@ -98,7 +101,7 @@
 			
 			table = $('#faraTable').DataTable({
 				"ajax": {
-					"url":"/Farsyn/api/$(pageName)",
+					"url":"/Farsyn/api$(pageName)",
 					"type":"GET",
 					"dataSrc": ""
 				},
@@ -145,7 +148,7 @@
       </table>
     </div>
   </div>
-  <footer class='site-footer'><a href='http://www.syn.is'>Heimasíða Faradice</a></footer>
+  <footer class='site-footer'><a href='http://www.syn.is'>Heimasíða Farsýn</a></footer>
   </body>
 </html>
   
