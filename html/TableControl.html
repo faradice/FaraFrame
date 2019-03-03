@@ -43,7 +43,7 @@
 	        $.ajax({
 	            method:"POST",
 	            dataType: "text",
-				url: "/Fara/api/$(pageName)",
+				url: "/Fara/api$(pageName)",
 	            data: command,
 	            success: function(data) {
 					table.ajax.reload( null, false );
@@ -198,7 +198,7 @@
 			
 			table = $('#faraTable').DataTable({
 				"ajax": {
-					"url":"/Fara/api/$(pageName)",
+					"url":"/Fara/api$(pageName)",
 					"type":"GET",
 					"dataSrc": ""
 				},
