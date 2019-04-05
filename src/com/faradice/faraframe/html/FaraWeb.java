@@ -204,5 +204,29 @@ public class FaraWeb {
 		}
 		return sb.toString();		
 	}
+	
+	public static String loginPage(String rootPath, String backgroundURL) {
+		FaraHtml fh = new FaraHtml();
+		StringBuilder content = new StringBuilder();
+        content.append("<div class='container-fluid backImg'>");
+		content.append("<p style='margin:10em'>");
+		content.append("<div class='col-sm-4 col-sm-offset-4'>'");		
+		content.append("<form method=\"post\">");
+		content.append(fh.passwordField("AÐGANGSORÐ", "200"));
+		content.append(fh.primaryButton("Innskrá", "login"));
+		content.append("</form>");
+		content.append("</div>");
+	 	content.append("</div>");
+		String url = backgroundURL;
+		StringBuilder sb = new StringBuilder();
+		sb.append(".backImg {");
+	    sb.append("background: url("+url+") center center;");
+	    sb.append("background-size: cover;");
+	    sb.append("background-position: 50% 30%;");
+	    sb.append("height: 50em");
+		sb.append("}");
+		String page = new FaraWeb(rootPath).pageFrame("INNSKRÁNING", sb.toString(), content.toString());
+		return page;
+	}
 		
 }
