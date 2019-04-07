@@ -92,7 +92,7 @@ public class FaraWeb {
 	}
 	
 	public static String tableControl(String prefix) {
-		String tableControl = loadFromCP(prefix+"TableControl.Html");
+		String tableControl = loadFromCP(prefix+"TableControl.html");
 		return tableControl;
 	}
 	
