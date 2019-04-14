@@ -223,7 +223,7 @@ public class FaraWeb {
 	    sb.append("background: url("+url+") center center;");
 	    sb.append("background-size: cover;");
 	    sb.append("background-position: 50% 30%;");
-	    sb.append("height: 50em");
+	    sb.append("height: 28em");
 		sb.append("}");
 		String page = new FaraWeb(rootPath).pageFrame("INNSKRÁNING", sb.toString(), content.toString());
 		return page;
