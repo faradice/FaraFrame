@@ -44,9 +44,17 @@
 	<script type="text/javascript" class="init">	
 		var table; 	
 
-		var charger = 's1';
-		var dateTo = new Date(moment());
+		var charger = 'Allar';
+		var chargerNames = ['Allar ', 'Decode 1 ', 'Decode 2 ', 'Decode 3 ', 'Decode 4 '];
+ 		var dateTo = new Date(moment());
 		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
+
+		var chargerFields = [];
+		for(var i=0; i<chargerNames.length; i++)  {
+			chargerFields[i] = {};
+			chargerFields[i].label = chargerNames[i];
+			chargerFields[i].value ='s'+i;    
+		}
 		
 		editor = new $.fn.dataTable.Editor( {
 			fields: 
@@ -54,11 +62,7 @@
 				{label: 'Hleðsla', name: 'hledsla', type: 'select',
 					def: function () { return charger; },
 					fieldInfo: 'Ein eða allar hleðslur',
-					options: [
-						{ label: 'Allar', value: 's0' },
-						{ label: 'Decode 1', value: 's1' },
-						{ label: 'Decode 2', value: 's2' }
-					]
+					options: chargerFields
 				},
 				
 				{label: 'Tímabil:', name: 'dateFrom', type: 'datetime', 
@@ -83,6 +87,8 @@
 						name: 'ok',
 					   action: function() {
 						  charger = editor.field('hledsla').get();
+						  dateFrom = editor.field('dateFrom').get();
+						  dateTo = editor.field('dateTo').get();
 						  this.close();
 //						  editor.destroy();
 					   }     					  
