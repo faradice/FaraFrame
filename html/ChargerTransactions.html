@@ -24,6 +24,7 @@
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" language="javascript "src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	
 	<style>
    		.dt-button.yellow-fg {
@@ -42,7 +43,68 @@
 	
 	<script type="text/javascript" class="init">	
 		var table; 	
-	  	function updateData(command) {
+
+	    editor = new $.fn.dataTable.Editor( {
+			fields: 
+			[ 
+				{label: "Status:", name: "enable", type: 'radio',
+					def: function () { return 'Disabled'; },
+					options: [
+						{label: 'Enabled',  value: 'Enabled'},
+						{label: 'Disabled', value: 'Disabled'}
+					]
+				},
+				
+				{label: 'Tímabil:', name: 'dagsetning', type: 'datetime', 
+					def: function () {return new Date(moment('11 Feb 2019', 'D MMM YYYY')); },
+					format: 'D MMM YYYY',
+					fieldInfo: 'Byrjun tímabils',
+				}, 
+
+				{label: '', name: 'dagsetning2', type: 'datetime', 
+					def: function () {return new Date(moment('11 Mar 2019', 'D MMM YYYY')); },
+					format: 'D MMM YYYY',
+					fieldInfo: 'lok tímabils',
+				}, 
+				
+				{label: 'Hleðsla:', fieldInfo: 'Nafn á hleðslunni ', name: 'hledsla',
+					def: function () { return 'Hleðslan'; },
+				}, 
+				
+				{label: 'Kapall', name: 'Type', type: 'select',
+					def: function () { return 'type1'; },
+					options: [
+						{ label: 'Type1', value: 'type1' },
+						{ label: 'Type2', value: 'type2' }
+					]
+				}
+			] // Fields
+		}); // Editor
+ 
+		function showSelectDialog() {
+			alert('Velja stöðvar og tímabil');
+			  editor.create({
+					title: 'Stöðvar og Tímabil',	
+					buttons: [
+					{  text:'Staðfesta',
+						name: 'ok',
+					   action: function() {
+						  this.close();
+						  saveFields();
+						  editor.destroy();
+					   }     					  
+					}, 
+					{  text:'Hætta við',
+					   action: function(e,dt, node, config) {
+						  this.close();
+						  editor.destroy();
+					   }     					  
+					} 
+					]
+				});
+		}
+
+		function updateData(command) {
 	        $.ajax({
 	            method:"POST",
 	            dataType: "text",
@@ -58,47 +120,15 @@
 	    }    
 	
 		$(document).ready(function() {
-			var turnOn = {
+			var velja = {
 			  text: '',
-			  className: 'far fa-lightbulb yellow-fg',
-			  titleAttr: 'Kveikja',
-			  extend: 'selected',
+			  className: 'fas fa-filter',
+			  titleAttr: 'Stöðvar og tímabil',
 			  action: function ( e, dt, node, config ) {
-				$(turnOn)   
-			    updateData(command);
+				  showSelectDialog();
 			  }
 			}
-			var dimmer = {
-			  text: '',
-			  className: 'far fa-minus-square dark-fg',
-			  titleAttr: 'Dimma',
-			  extend: 'selected',
-			  action: function ( e, dt, node, config ) {
-				 $(dimmer)   
-			     updateData(command);
-			  }
-			}
-			var brighter = {
-			  text: '',
-			  className: 'far fa-plus-square yellow-fg',
-			  titleAttr: 'Bjartar',
-			  extend: 'selected',
-			  action: function ( e, dt, node, config ) {
-				 $(brighter)   
-			     updateData(command);
-			  }
-			}
-			var turnOff = {
-			  text: '',
-			  className: 'far fa-lightbulb dark-fg',
-			  titleAttr: 'Slökkva',
-			  extend: 'selected',
-			  action: function ( e, dt, node, config ) {
-				 $(turnOff)   
-			     updateData(command);
-			  }
-			}
-			
+						
 			table = $('#faraTable').DataTable({
 				"ajax": {
 					"url":"/Fara/api$(pageName)",
@@ -129,10 +159,7 @@
 
 				dom: "Bfrtip",				
 				buttons: [
-					turnOn,
-					dimmer,
-					brighter,
-					turnOff,
+					velja
 				]
 			});
 		});
