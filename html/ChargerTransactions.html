@@ -44,60 +44,53 @@
 	<script type="text/javascript" class="init">	
 		var table; 	
 
-	    editor = new $.fn.dataTable.Editor( {
+		var charger = 's1';
+		var dateTo = new Date(moment());
+		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
+		
+		editor = new $.fn.dataTable.Editor( {
 			fields: 
 			[ 
-				{label: "Status:", name: "enable", type: 'radio',
-					def: function () { return 'Disabled'; },
+				{label: 'Hleðsla', name: 'hledsla', type: 'select',
+					def: function () { return charger; },
+					fieldInfo: 'Ein eða allar hleðslur',
 					options: [
-						{label: 'Enabled',  value: 'Enabled'},
-						{label: 'Disabled', value: 'Disabled'}
+						{ label: 'Allar', value: 's0' },
+						{ label: 'Decode 1', value: 's1' },
+						{ label: 'Decode 2', value: 's2' }
 					]
 				},
 				
-				{label: 'Tímabil:', name: 'dagsetning', type: 'datetime', 
-					def: function () {return new Date(moment('11 Feb 2019', 'D MMM YYYY')); },
+				{label: 'Tímabil:', name: 'dateFrom', type: 'datetime', 
+					def: function () {return dateFrom; },
 					format: 'D MMM YYYY',
 					fieldInfo: 'Byrjun tímabils',
 				}, 
 
-				{label: '', name: 'dagsetning2', type: 'datetime', 
-					def: function () {return new Date(moment('11 Mar 2019', 'D MMM YYYY')); },
+				{label: '', name: 'dateTo', type: 'datetime', 
+					def: function () {return dateTo; },
 					format: 'D MMM YYYY',
 					fieldInfo: 'lok tímabils',
-				}, 
-				
-				{label: 'Hleðsla:', fieldInfo: 'Nafn á hleðslunni ', name: 'hledsla',
-					def: function () { return 'Hleðslan'; },
-				}, 
-				
-				{label: 'Kapall', name: 'Type', type: 'select',
-					def: function () { return 'type1'; },
-					options: [
-						{ label: 'Type1', value: 'type1' },
-						{ label: 'Type2', value: 'type2' }
-					]
 				}
 			] // Fields
 		}); // Editor
  
 		function showSelectDialog() {
-			alert('Velja stöðvar og tímabil');
 			  editor.create({
 					title: 'Stöðvar og Tímabil',	
 					buttons: [
 					{  text:'Staðfesta',
 						name: 'ok',
 					   action: function() {
+						  charger = editor.field('hledsla').get();
 						  this.close();
-						  saveFields();
-						  editor.destroy();
+//						  editor.destroy();
 					   }     					  
 					}, 
 					{  text:'Hætta við',
 					   action: function(e,dt, node, config) {
 						  this.close();
-						  editor.destroy();
+//						  editor.destroy();
 					   }     					  
 					} 
 					]
