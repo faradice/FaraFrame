@@ -45,7 +45,8 @@
 		var table; 	
 
 		var charger = 'Allar';
-		var chargerNames = ['Allar ', 'Decode 1 ', 'Decode 2 ', 'Decode 3 ', 'Decode 4 '];
+//		var chargerNames = ['Allar ', 'Decode 1 ', 'Decode 2 ', 'Decode 3 ', 'Decode 4 '];
+		var chargerNames = $(Chargers)
  		var dateTo = new Date(moment());
 		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
 
@@ -87,9 +88,13 @@
 						name: 'ok',
 					   action: function() {
 						  charger = editor.field('hledsla').get();
+						  charger = editor.field('hledsla').get();
 						  dateFrom = editor.field('dateFrom').get();
 						  dateTo = editor.field('dateTo').get();
 						  this.close();
+						  var cName = editor.field('hledsla').input().children(':selected').text()
+						  var command = "query; "+cName+", "+dateFrom+", "+dateTo;
+						  updateData(command)
 //						  editor.destroy();
 					   }     					  
 					}, 
