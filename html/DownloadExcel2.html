@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+	<title>Download</title>
+	<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+
+	function processFile(file, filename) {
+        var blob = base64toBlob(file, "data:application/vnd.ms-excel;")
+	    var objectUrl = URL.createObjectURL(blob);
+	    var downloadLink = $("#downloadlink")[0];
+	    downloadLink.href = objectUrl; //uri;
+	    downloadLink.download = filename;
+	    document.getElementById("downloadlink").click(); 
+	}
+	  
+	function base64toBlob(b64Data, contentType, sliceSize) {
+	  contentType = contentType || '';
+	  sliceSize = sliceSize || 512;
+	  var byteCharacters = atob(b64Data);
+	  var byteArrays = [];
+	  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+	    var slice = byteCharacters.slice(offset, offset + sliceSize);
+	    var byteNumbers = new Array(slice.length);
+	    for (var i = 0; i < slice.length; i++) {
+	      byteNumbers[i] = slice.charCodeAt(i);
+	    }
+	    var byteArray = new Uint8Array(byteNumbers);
+	    byteArrays.push(byteArray);
+	  }
+	  var blob = new Blob(byteArrays, {
+	    type: "application/vnd.ms-excel"
+	  });
+	  return blob;
+	}
+
+	function createAndDownload() {
+	    $.ajax({
+    	    url : "/Fara/api/FaraApiServlet/excel",
+            type: "GET",
+            dataType: "json",
+            cache: false,
+            success: function(response){
+                if(response.length != 0){
+                    console.log("Successful file retrieval!");
+                    processFile( response[0].filecontent, response[0].filename  );    
+                }
+                else{
+                    console.log("Error in file retrieval!");
+                    console.log( response );
+                }
+            },
+            error: function( response ){
+                console.log("There was an API server error!");
+                console.log( response );
+            }
+	    });
+		
+	}
+	
+</script>
+
+</head>
+
+<body>
+
+<input id="Download" type="button" value="Download" onclick="createAndDownload();" />
+<p>
+<a id="downloadlink" style="display:none;" >Download Excel File</a> 
+</body>
+</html>
