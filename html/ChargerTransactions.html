@@ -45,7 +45,6 @@
 		var table; 	
 
 		var charger = 'Allar';
-//		var chargerNames = ['Allar ', 'Decode 1 ', 'Decode 2 ', 'Decode 3 ', 'Decode 4 '];
 		var chargerNames = $(Chargers)
  		var dateTo = new Date(moment());
 		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
@@ -95,13 +94,11 @@
 						  var cName = editor.field('hledsla').input().children(':selected').text()
 						  var command = "query; "+cName+", "+dateFrom+", "+dateTo;
 						  updateData(command)
-//						  editor.destroy();
 					   }     					  
 					}, 
 					{  text:'Hætta við',
 					   action: function(e,dt, node, config) {
 						  this.close();
-//						  editor.destroy();
 					   }     					  
 					} 
 					]
