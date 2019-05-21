@@ -44,25 +44,25 @@
 	<script type="text/javascript" class="init">	
 		var table; 	
 
-		var charger = 'Allar';
-		var chargerNames = $(Chargers)
+		var item = '';
+		var items = $(Items)
  		var dateTo = new Date(moment());
 		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
 
-		var chargerFields = [];
+		var itemFields = [];
 		for(var i=0; i<chargerNames.length; i++)  {
-			chargerFields[i] = {};
-			chargerFields[i].label = chargerNames[i];
-			chargerFields[i].value ='s'+i;    
+			itemFields[i] = {};
+			itemFields[i].label = items[i];
+			itemFields[i].value ='s'+i;    
 		}
 		
 		editor = new $.fn.dataTable.Editor( {
 			fields: 
 			[ 
-				{label: 'Hleðsla', name: 'hledsla', type: 'select',
-					def: function () { return charger; },
-					fieldInfo: 'Ein eða allar hleðslur',
-					options: chargerFields
+				{label: $(ItemLabel), name: 'item', type: 'select',
+					def: function () { return item; },
+					fieldInfo: 'Veljið eitt eða öll heiti',
+					options: itemFields
 				},
 				
 				{label: 'Tímabil:', name: 'dateFrom', type: 'datetime', 
@@ -81,17 +81,16 @@
  
 		function showSelectDialog() {
 			  editor.create({
-					title: 'Stöðvar og Tímabil',	
+					title: 'Heiti og Tímabil',	
 					buttons: [
 					{  text:'Staðfesta',
 						name: 'ok',
 					   action: function() {
-						  charger = editor.field('hledsla').get();
-						  charger = editor.field('hledsla').get();
+						  item = editor.field('item').get();
 						  dateFrom = editor.field('dateFrom').get();
 						  dateTo = editor.field('dateTo').get();
 						  this.close();
-						  var cName = editor.field('hledsla').input().children(':selected').text()
+						  var cName = editor.field('item').input().children(':selected').text()
 						  var command = "query; "+cName+", "+dateFrom+", "+dateTo;
 						  updateData(command)
 					   }     					  
@@ -124,7 +123,7 @@
 			var velja = {
 			  text: '',
 			  className: 'fas fa-filter',
-			  titleAttr: 'Stöðvar og tímabil',
+			  titleAttr: 'Heiti og tímabil',
 			  action: function ( e, dt, node, config ) {
 				  showSelectDialog();
 			  }
@@ -158,7 +157,7 @@
 
 				},
 
-				dom: "Bfrtip",				
+				dom: "Bfrtip",	 			
 				buttons: [
 					velja
 				]
