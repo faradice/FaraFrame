@@ -66,7 +66,7 @@
  
 		function showSelectDialog() {
 			  editor.create({
-					title: 'Heiti og Tímabil',	
+					title: 'Nýtt tímabil',	
 					buttons: [
 					{  text:'Staðfesta',
 						name: 'ok',
@@ -104,14 +104,28 @@
 	
 		$(document).ready(function() {
 			var velja = {
-			  text: '',
-			  className: 'fas fa-filter',
-			  titleAttr: 'Heiti og tímabil',
+			  text: 'Veljið tímabil',
+//			  className: 'fas fa-filter',
+			  titleAttr: 'Tímabil',
 			  action: function ( e, dt, node, config ) {
 				  showSelectDialog();
 			  }
 			}
-						
+
+			var pdf2 = {
+					extend:    'pdfHtml5',
+					text:      '&nbsp;pdf',
+					className: 'far fa-file-pdf',
+					titleAttr: 'PDF'
+				}
+
+			var excel2 = {
+				extend:    'excelHtml5',
+				text:      '&nbsp;excel',
+				className: 'far fa-file-excel',
+				titleAttr: 'Excel'
+			}
+		
 			table = $('#faraTable').DataTable({
 				"ajax": {
 					"url":"/Fara/api$(pageName)",
@@ -141,7 +155,9 @@
 
 				dom: "Bfrtip",	 			
 				buttons: [
-					velja
+					velja,
+					excel2, 
+					pdf2
 				]
 			});
 		});
@@ -153,11 +169,12 @@
     <p>
     <div style='margin: 1em'>
       <div style= 'margin-bottom:1em'>$(TableTitle)</div>
+      <div style= 'margin-bottom:1em'>$(SubTitle)</div>
       <table id="faraTable" class="display nowrap" style="width:100%">
       </table>
     </div>
   </div>
-  <footer class='site-footer'><a href='http://www.syn.is'>Heimasíða Farsýn</a></footer>
+  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
   </body>
 </html>
   
