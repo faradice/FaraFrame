@@ -70,7 +70,7 @@ public class FaraWeb {
 			String value = bpi.getString(key);
 			Class<?> type = bpi.getType(key);
 			if (type.isAssignableFrom(Boolean.class)) {
-				form+= FaraHtml.createCheckbox(key, key, value);
+				form+= FaraHtml.createCheckbox(key, key, "100",value);
 			} else {
 				form+= FaraHtml.createField(key, length[i]+"", value);
 			}
