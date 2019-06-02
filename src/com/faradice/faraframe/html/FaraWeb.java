@@ -95,6 +95,11 @@ public class FaraWeb {
 		String tableControl = loadFromCP(prefix+"TableControl.html");
 		return tableControl;
 	}
+
+	public static String testCheckBoxPage() {
+		String page = loadFromCP("ext/CheckBoxDemoOrg.html");
+		return page;
+	}
 	
 	public static String table(List<String> csvRows) {
 		if (csvRows.size() < 1) {
