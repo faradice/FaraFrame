@@ -1,0 +1,182 @@
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>$(TableTitle)</title>
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
+    <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/editor.dataTables.css' />
+    <link rel='stylesheet' type='text/css' href='http://www.faradice.com/resource/css/Common.css'>
+	 	 	
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" language="javascript "src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+	
+	<style>
+   		.dt-button.yellow-fg {
+   			color: #EAC440;
+   		}
+
+   		.dt-button.dark-bg {
+   			color: #EAC440;
+   		}
+
+  		.dt-button.sep {
+   			margin-right: 2em;
+   		}
+
+	</style>
+	
+	<script type="text/javascript" class="init">	
+		var table; 	
+
+ 		var dateTo = new Date(moment());
+		var dateFrom = new Date(moment(dateTo).subtract(1,'months'));
+
+		editor = new $.fn.dataTable.Editor( {
+			fields: 
+			[ 
+				{label: 'Tímabil:', name: 'dateFrom', type: 'datetime', 
+					def: function () {return dateFrom; },
+					format: 'D MMM YYYY',
+					fieldInfo: 'Byrjun tímabils',
+				}, 
+
+				{label: '', name: 'dateTo', type: 'datetime', 
+					def: function () {return dateTo; },
+					format: 'D MMM YYYY',
+					fieldInfo: 'lok tímabils',
+				}
+			] // Fields
+		}); // Editor
+ 
+		function showSelectDialog() {
+			  editor.create({
+					title: 'Nýtt tímabil',	
+					buttons: [
+					{  text:'Staðfesta',
+						name: 'ok',
+					   action: function() {
+						  dateFrom = editor.field('dateFrom').get();
+						  dateTo = editor.field('dateTo').get();
+						  this.close();
+						  var command = "query; "+dateFrom+", "+dateTo;
+						  updateData(command)
+					   }     					  
+					}, 
+					{  text:'Hætta við',
+					   action: function(e,dt, node, config) {
+						  this.close();
+					   }     					  
+					} 
+					]
+				});
+		}
+
+		function updateData(command) {
+	        $.ajax({
+	            method:"POST",
+	            dataType: "text",
+				url: "/Fara/api$(pageName)",
+	            data: command,
+	            success: function(data) {
+					table.ajax.reload( null, false );
+	            },
+	            error: function() {
+					table.ajax.reload( null, false );
+	            }
+	        });
+	    }    
+	
+		$(document).ready(function() {
+			var velja = {
+			  text: 'Veljið tímabil',
+//			  className: 'fas fa-filter',
+			  titleAttr: 'Tímabil',
+			  action: function ( e, dt, node, config ) {
+				  showSelectDialog();
+			  }
+			}
+
+			var pdf2 = {
+					extend:    'pdfHtml5',
+					text:      '&nbsp;pdf',
+					className: 'far fa-file-pdf',
+					titleAttr: 'PDF'
+				}
+
+			var excel2 = {
+				extend:    'excelHtml5',
+				text:      '&nbsp;excel',
+				className: 'far fa-file-excel',
+				titleAttr: 'Excel'
+			}
+		
+			table = $('#faraTable').DataTable({
+				"ajax": {
+					"url":"/Fara/api$(pageName)",
+					"type":"GET",
+					"dataSrc": ""
+				},
+		     "columns": [
+			      $(columns)
+             ],
+				dom: "Bfrtip",				
+				select: 'single',
+				responsive: true,
+				
+				language: {
+				    info: "Síða _PAGE_ af _PAGES_",
+					paginate: {
+						previous: "Fyrri",
+						next: "Næsta",
+						last: "Síðasta",
+						first: "Fyrsta"
+				   },
+			        select: {
+			            rows: ""
+			        },
+			        "search": "Finna:"
+				},
+
+				dom: "Bfrtip",	 			
+				buttons: [
+					velja,
+					excel2, 
+					pdf2
+				]
+			});
+		});
+     </script>		
+</head>
+<body>
+   $(Header)
+  <div class='page-wrap'>
+    <p>
+    <div style='margin: 1em'>
+      <div style= 'margin-bottom:1em'>$(TableTitle)</div>
+      <div style= 'margin-bottom:1em'>$(SubTitle)</div>
+      <table id="faraTable" class="display nowrap" style="width:100%">
+      </table>
+    </div>
+  </div>
+  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
+  </body>
+</html>
+  
+
+
