@@ -100,6 +100,12 @@ public class FaraWeb {
 		String page = loadFromCP("ext/CheckBoxDemoOrg.html");
 		return page;
 	}
+
+	public static String testCheckBox2Page() {
+		String page = loadFromURL("www.faradice.com/resource/ext/CheckBoxDemoOrg.html");
+		return page;
+	}
+
 	
 	public static String table(List<String> csvRows) {
 		if (csvRows.size() < 1) {
@@ -191,8 +197,8 @@ public class FaraWeb {
 
 	public static String loadFromURL(String resource) {
 		StringBuilder sb = new StringBuilder();
-		if (!resource.startsWith("html//")) {
-			resource = resource + "html//";
+		if (!resource.startsWith("http://")) {
+			resource = "http://"+ resource;
 		}
 		BufferedReader br = null;
 		try  {
