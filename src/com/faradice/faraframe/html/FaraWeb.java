@@ -31,6 +31,11 @@ public class FaraWeb {
 		return page;
 	}
 
+	public String pageFrame(String title, String styles, String jspTop, String jspReady, String content) {
+		String header =  loadFromCP(htmlPath+"Header.html");
+		return pageFrame(title, styles, jspReady, jspTop, header, content);
+	}
+
 	
 	public String pageFrame(String title, String content) {
 		String header =  loadFromCP(htmlPath+"Header.html");
@@ -41,6 +46,7 @@ public class FaraWeb {
 		String header =  loadFromCP(htmlPath+"Header.html");
 		return pageFrame(title, styles, "", "", header, content);
 	}
+
 	
 	public String end() {
 		return  loadFromCP(htmlPath+"Footer.html");
