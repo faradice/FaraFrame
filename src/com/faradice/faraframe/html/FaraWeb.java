@@ -20,7 +20,8 @@ public class FaraWeb {
 		this.htmlPath = htmlpath;
 	}
 	
-	public String pageFrame(String title, String styles, String jspTop, String jspReady, String header, String content) {
+	public String pageFrame(String title, String styles, String jspTop, String jspReady, String content) {
+		String header = loadFromCP(htmlPath+"Header.html");
 		String page = loadFromCP(htmlPath+"PageFramework.html");
 		page = page.replace("$(Title)", title);
 		page = page.replace("$(Styles)", styles);
@@ -31,20 +32,13 @@ public class FaraWeb {
 		return page;
 	}
 
-	public String pageFrame(String title, String styles, String jspTop, String jspReady, String content) {
-		String header =  loadFromCP(htmlPath+"Header.html");
-		return pageFrame(title, styles, jspReady, jspTop, header, content);
-	}
-
 	
 	public String pageFrame(String title, String content) {
-		String header =  loadFromCP(htmlPath+"Header.html");
-		return pageFrame(title, "", "", "", header, content);
+		return pageFrame(title, "", "", "", content);
 	}
 
 	public String pageFrame(String title, String styles, String content) {
-		String header =  loadFromCP(htmlPath+"Header.html");
-		return pageFrame(title, styles, "", "", header, content);
+		return pageFrame(title, styles, "", "", content);
 	}
 
 	
