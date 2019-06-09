@@ -49,6 +49,12 @@ public class FaraWeb {
 	public static String lcr(String s) {
 		return s+"\n";
 	}	
+
+	public static String headerBody() {
+		String header = loadFromCP("HeaderBody.html");
+		return header;
+	}
+
 	
 	public static String form(String[] cols, Object[] values, int[] fieldSize) {
 		BasicPropertyItem bi = new BasicPropertyItem(cols);
