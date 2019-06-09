@@ -97,6 +97,16 @@ public class FaraWeb {
 		return sb.toString();
 	}
 	
+	public static String plainHeaderHead() {
+		String tableControl = loadFromCP("StandaloanHeaderHead.html");
+		return tableControl;
+	}
+
+	public static String plainHeaderBody() {
+		String tableControl = loadFromCP("StandaloanHeader.html");
+		return tableControl;
+	}
+
 	public static String tableControl(String prefix) {
 		String tableControl = loadFromCP(prefix+"TableControl.html");
 		return tableControl;
