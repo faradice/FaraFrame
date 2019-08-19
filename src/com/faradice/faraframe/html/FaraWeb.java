@@ -199,7 +199,7 @@ public class FaraWeb {
 			String resource = "/"+fileName;
 			InputStream is = FaraWeb.class.getResourceAsStream(resource);
 			if (is == null) throw new Exception("Resource not found: "+resource);
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 			String res = null;
 			while ((res = br.readLine()) != null) {
 				sb.append(lcr(res));
@@ -219,7 +219,7 @@ public class FaraWeb {
 		BufferedReader br = null;
 		try  {
 			URI uri = new URI(resource);
-			br = new BufferedReader(new InputStreamReader(uri.toURL().openStream()));
+			br = new BufferedReader(new InputStreamReader(uri.toURL().openStream(),"UTF-8"));
 			String res = null;
 			while ((res = br.readLine()) != null) {
 				sb.append(lcr(res));
