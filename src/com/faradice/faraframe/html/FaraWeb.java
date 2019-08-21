@@ -239,8 +239,8 @@ public class FaraWeb {
 		content.append("<p style='margin:10em'>");
 		content.append("<div class='col-sm-4 col-sm-offset-4'>'");		
 		content.append("<form method=\"post\">");
-		content.append(fh.passwordField("AÐGANGSORÐ", "200"));
-		content.append(fh.primaryButton("Innskrá", "login"));
+		content.append(FaraHtml.passwordField("AÐGANGSORÐ", "200"));
+		content.append(FaraHtml.primaryButton("Innskrá", "login"));
 		content.append("</form>");
 		content.append("</div>");
 	 	content.append("</div>");
