@@ -1,3 +1,4 @@
+<!Doctype html>
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -26,6 +27,51 @@
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" language="javascript "src="http://www.faradice.com/resource/js/dataTables.editor.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+ 	<style>
+       html,body{
+           min-height:100%;
+           height:100%;
+           margin:0;
+           padding:0;
+       }
+       .pagewrapper{
+           display: flex;
+           flex-direction: column;
+       }
+       .pageheader{
+           padding: 0;
+           color: #D9DADA;
+           background-color: #243165;
+           display:flex;
+       }
+       .pagebody{
+           padding: 0.5em;
+           flex-grow:2;
+           overflow: auto;
+       }
+       .pagefooter{
+           background-color: #243165;
+           color: #D9DADA;
+           display:flex;
+           padding:0.5em;
+       }
+       .MenuButton{
+           padding: 0.3em;
+           margin-left: 0.1em;
+           border-right: solid 1px white;
+           cursor:pointer;
+       }
+       a {
+ 		 color: #b8bcbc ;
+  		 font-family: helvetica;
+  		 text-decoration: none;
+  		 text-transform: uppercase;
+	   }
+
+       a:hover {
+         color: #8a8d8d;
+       }
+   </style>
  	
 	<style>
 		$(Styles)
@@ -38,19 +84,13 @@
 		});
      </script>		
 </head>
-<body>
-  $(Header)
-  <div class='page-wrap'>
-    <p>
-    <div style='margin: 1em'>
-      <div style= 'margin-bottom:1em'>$(Title)</div>
+<body class="pagewrapper"></body>
+   <div class="pageheader">
+      $(Header)
+   </div>
+   <div class="pagebody">
       $(Content)
-    </div>
-    
-  </div>
-  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
-  </body>
+   </div>
+   <div class="pagefooter"><a href='http://www.faradice.com'>Heimasíða Faradice</div>
 </html>
-  
-
-
+ 
