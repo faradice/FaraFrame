@@ -27,18 +27,7 @@
 	<script type="text/javascript" language="javascript "src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	
 	<style>
-   		.dt-button.yellow-fg {
-   			color: #EAC440;
-   		}
-
-   		.dt-button.dark-bg {
-   			color: #EAC440;
-   		}
-
-  		.dt-button.sep {
-   			margin-right: 2em;
-   		}
-
+		$(MainStyles)
 	</style>
 	
 	<script type="text/javascript" class="init">	
@@ -163,20 +152,23 @@
 		});
      </script>		
 </head>
-<body>
-   $(Header)
-  <div class='page-wrap'>
-    <p>
-    <div style='margin: 1em'>
-      <div style= 'margin-bottom:1em'>$(TableTitle)</div>
-      <div style= 'margin-bottom:1em'>$(SubTitle)</div>
-      <table id="faraTable" class="display nowrap" style="width:100%">
-      </table>
-    </div>
-  </div>
-  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
-  </body>
+
+<body class="pagewrapper"></body>
+
+<span class='Header'>
+	$(Header)
+</span>
+   
+<div class="pagebody">
+	<p>
+	<div style='margin: 1em'>
+  	   <div style= 'margin-bottom:1em'>$(TableTitle)</div>
+ 	   <table id="faraTable" class="display nowrap" style="width:100%">
+	       </table>
+	   </div>
+	</div>
+</div>
+   
+<div class="pagefooter"><a href='http://www.faradice.com'>Heimasíða Faradice</div>
+
 </html>
-  
-
-

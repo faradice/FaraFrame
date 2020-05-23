@@ -26,16 +26,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	
 	<style>
-   		.dt-button.gray {
-   			color: gray;
-   		}
-
-  		.dt-button.sep {
-   			margin-right: 2em;
-   		}
-
+		$(MainStyles)
 	</style>
-	
 	
 	<script type="text/javascript" class="init">	
 		var table; 	
@@ -238,19 +230,23 @@
 		});
      </script>		
 </head>
-<body>
-   $(Header)
-  <div class='page-wrap'>
-    <p>
-    <div style='margin: 1em'>
-      <div style= 'margin-bottom:1em'>$(TableTitle)</div>
-      <table id="faraTable" class="display nowrap" style="width:100%">
-      </table>
-    </div>
-  </div>
-  <footer class='site-footer'><a href='http://www.faradice.com'>Heimasíða Faradice</a></footer>
-  </body>
+
+<body class="pagewrapper"></body>
+
+<span class='Header'>
+	$(Header)
+</span>
+   
+<div class="pagebody">
+	<p>
+	<div style='margin: 1em'>
+  	   <div style= 'margin-bottom:1em'>$(TableTitle)</div>
+ 	   <table id="faraTable" class="display nowrap" style="width:100%">
+	       </table>
+	   </div>
+	</div>
+</div>
+   
+<div class="pagefooter"><a href='http://www.faradice.com'>Heimasíða Faradice</div>
+
 </html>
-  
-
-

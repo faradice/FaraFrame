@@ -23,6 +23,8 @@ public class FaraWeb {
 	public String pageFrame(String title, String styles, String jspTop, String jspReady, String content) {
 		String header = loadFromCP(htmlPath+"Header.html");
 		String page = loadFromCP(htmlPath+"PageFramework.html");
+		String mainStyles = loadFromCP(htmlPath+"MainStyles.css");
+		page = page.replace("$(MainStyles)", mainStyles);
 		page = page.replace("$(Title)", title);
 		page = page.replace("$(Styles)", styles);
 		page = page.replace("$(JspTop)", jspTop);
