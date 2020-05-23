@@ -101,6 +101,8 @@ public class FaraWeb {
 	
 	public static String plainHeaderHead() {
 		String tableControl = loadFromCP("StandaloanHeaderHead.html");
+		String mainStyles = loadFromCP("MainStyles.css");
+		tableControl = tableControl.replace("$(MainStyles)", mainStyles);
 		return tableControl;
 	}
 
