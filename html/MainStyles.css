@@ -20,7 +20,7 @@ html,body{
 .headFrame {
      border:5px solid #FFFFFF;
      border-radius: 5px;
-     background-color: #337ab7;
+     background-color: #536B8E;
 }
 
 .burger {
@@ -42,7 +42,7 @@ html,body{
 .Header {
   border-bottom:5px #FFFFFF;
   font-size: 40px;
-  background-color: #337ab7;
+  background-color: #536B8E;
   color: #FFFFFF;
   font-size: 40px;	
   padding:0.4em 0.5em 0.2em 0.5em; 	 
@@ -87,9 +87,7 @@ html,body{
 .container {
   padding: 2px;
 }
-       	
-       	
-       	
+       	      	
        	.pagewrapper{
        	   display: flex;
            flex-direction: column;
@@ -97,7 +95,7 @@ html,body{
        	.pageheader{
            padding: 0;
            color: #FFFFFF;
-           background-color: #337ab7;
+           background-color: #536B8E;
            display:flex;
        	}
        	.pagebody{
@@ -106,7 +104,7 @@ html,body{
            overflow: auto;
        	}
        	.pagefooter{
-           background-color: #337ab7;
+           background-color: #536B8E;
            color: #FFFFFF;
            display:flex;
            padding:0.5em;
@@ -130,7 +128,7 @@ html,body{
        
 		.nav {
           display: flex;
-          background-color: #337ab7;
+          background-color: #536B8E;
           color: #FFFFFF;
           margin: -15px -20px 0px 0px;
         }        
