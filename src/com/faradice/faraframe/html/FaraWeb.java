@@ -240,7 +240,7 @@ public class FaraWeb {
 		FaraHtml fh = new FaraHtml();
 		StringBuilder content = new StringBuilder();
         content.append("<div class='container-fluid backImg'>");
-		content.append("<p style='margin:10em'>");
+		content.append("<p style='margin:12em'>");
 		content.append("<div class='col-sm-4 col-sm-offset-4'>'");		
 		content.append("<form method=\"post\">");
 		content.append(FaraHtml.passwordField("AÐGANGSORÐ", "200"));
@@ -254,7 +254,7 @@ public class FaraWeb {
 	    sb.append("background: url("+url+") center center;");
 	    sb.append("background-size: cover;");
 	    sb.append("background-position: 50% 30%;");
-	    sb.append("height: 28em");
+	    sb.append("height: 36em");
 		sb.append("}");
 		String page = new FaraWeb(rootPath).pageFrame("INNSKRÁNING", sb.toString(), content.toString());
 		return page;
