@@ -194,7 +194,7 @@ public class FaraWeb {
 			row += value;
 			colNr++;
 		}
-		FaraFiles.appendToFile(fileName, row);
+		FaraFiles.appendRowToCSVFile(fileName, row);
 	}
 
 	public static String loadFromCP(String fileName) {
